@@ -51,22 +51,18 @@ const questionnaire_2 = {
     Titre : "Bloc", 
     questions : [
     {
-    question:"Développement commercial",
-    type : 'champs-reponse'
-    },
-    {
-    question:"Situation actuelle",
-    type : 'champs-reponse'
-    },
-    {
     question:"Avez-vous déjà des clients réguliers ?",
     type : "choix-multiple",
+    coefficient: 1,
+    sous_categorie : "Situation actuelle",
     1:{text:"oui", score:1},
     2:{text:"non", score:2},
-    },
+    },    
     {
     question:"Comment décririez-vous votre clientèle actuelle ? (plusieurs réponses possibles)",
     type : "multiple-reponse",
+    coefficient: 4,
+    sous_categorie : "Situation actuelle",
     1:{text:"B2C", score:1},
     2:{text:"B2G - Petites entités (Associations & économie collaborative & institutions publiques,collectivités, ministères, etc.)", score:2},
     3:{text:"B2B - TPE et PME", score:3},
@@ -76,6 +72,8 @@ const questionnaire_2 = {
     {
     question:"Quelle est la taille du marché potentiel global (mondial) dans lequel s'insère votre entreprise ?",
     type : "choix-multiple",
+    coefficient: 3,
+    sous_categorie : "Strategie",
     1:{text:"Ne sais pas", score:1},
     2:{text:"Nulle (vous n'avez pas encore de clients)", score:2},
     3:{text:"Quelques clients", score:3},
@@ -85,11 +83,15 @@ const questionnaire_2 = {
     },
     {
         question: "Quelles sont vos cibles principales ?",
-        type :"champs-reponse"
+        type :"champs-reponse",
+        coefficient: 1,
+    sous_categorie : "Strategie",
     },
     {
     question:"Connaissez-vous vos cibles et avez-vous défini un plan d'action ?",
     type : "choix-multiple",
+    coefficient: 4,
+    sous_categorie : "Strategie",
     1:{text:"Non, vous êtes en train d'évaluer les cibles", score:1},
     2:{text:"Oui, vous avez identifié vos cibles", score:2},
     3:{text:"Oui, vous avez identifié vos cibles et avez défini un plan d'action", score:3},
@@ -99,6 +101,8 @@ const questionnaire_2 = {
     {
     question:"Comment pouvez-vous qualifier votre concurrence ?",
     type : "choix-multiple",
+    coefficient: 2,
+    sous_categorie : "Strategie",
     1:{text:"Inexistante", score:1},
     2:{text:"Faible", score:2},
     3:{text:"Saine", score:3},
@@ -109,6 +113,8 @@ const questionnaire_2 = {
     {
     question:"Quelles sont, selon vous, le niveau des barrières à l'entrée pour vos concurrents dans le(s) marché(s) exploité(s) actuellement ?",
     type : "choix-multiple",
+    coefficient: 2,
+    sous_categorie : "Strategie",
     1:{text:"Très faibles, il n'existe pas d'investissement et de temps à consacrer pour rentrer sur votre marché", score:1},
     2:{text:"Faibles, il y a peu d'investissement et de temps à consacrer", score:2},
     3:{text:"Moyennes, il faut y consacrer des investissements et du temps", score:3},
@@ -118,6 +124,8 @@ const questionnaire_2 = {
     {
     question:"Parmi les propositions suivantes, laquelle décrit le mieux la situation de votre département commercial ?",
     type : "choix-multiple",
+    coefficient: 2,
+    sous_categorie : "Organisation",
     1:{text:"Vous ne disposez pas des ressources ou compétences pour générer les ventes ciblées", score:1},
     2:{text:"Vos équipes de vente sont débordées par le carnet de commande (prise de retard dans les commandes et/ou les signatures de contrats)", score:2},
     3: {text:"Vous avez du mal à recruter des commerciaux en parallèle de l'augmentation de vos ventes", score:3},
@@ -127,6 +135,8 @@ const questionnaire_2 = {
     {
    question:"Selon vous, vos processus de Ventes ou Marketing sont",
    type : "choix-multiple",
+    coefficient: 2,
+    sous_categorie : "Processus",
     1:{text:"Non formalisés et non connus", score:1},
     2:{text:"Non formalisés mais connus par quelques personnes", score:2},
     3:{text:"Non formalisés mais connus par tous les collaborateurs concernés", score:3},
@@ -136,6 +146,8 @@ const questionnaire_2 = {
     {
         question:"Pensez-vous que vos processus commerciaux sont adaptés à votre croissance ?",
         type : "choix-multiple",
+        coefficient: 2,
+        sous_categorie : "Processus",
         1:{text:"Ne sais pas", score:1},
         2:{text:"Pas du tout", score:2},
         3:{text:"Plutôt non", score:3},
@@ -143,8 +155,10 @@ const questionnaire_2 = {
         5:{text:"Oui totalement", score:5},
     },
     {
-        question:"elon vous, vos outils de Ventes / Marketing sont-ils efficients ? (ex : CRM, tableaux de bord, etc.)",
+        question:"il y a t'il la mise en place des KPIs / indicateurs de suivi de la performance de ventes / marketing pour suivre la performance de leurs processus",
         type : "choix-multiple",
+        coefficient: 3,
+        sous_categorie : "KPIs",
         1:{text:"Ne sais pas", score:1},
         2:{text:"Pas du tout", score:2},
         3:{text:"Partiellement, sur quelques processus", score:3},
@@ -154,6 +168,8 @@ const questionnaire_2 = {
     {
         question:"Selon vous, vos outils de Ventes / Marketing sont-ils efficients ? (ex : CRM, tableaux de bord, etc.)",
         type : "choix-multiple",
+        coefficient: 2,
+    sous_categorie : "Outils",
         1:{text:"Pas du tout", score:1},
         2:{text:"Plutôt non", score:2},
         3:{text:"Plutôt oui", score:3},
@@ -162,21 +178,27 @@ const questionnaire_2 = {
     {
         question:"Pour conclure sur cet axe, quelles sont les problématiques principales que vous rencontrez sur le volet développement commercial ?",
         type : 'champs-reponse',
+        coefficient: 1,
+        sous_categorie : "Situation actuelle",
     },
     ]
 }
 
 const questionnaire_3 = {  
-    Catégories: "informations complémentaire",
-    Titre : "Infos", 
+    Catégories: "internationnal",
+    Titre : "Informations", 
     questions : [
     {
     question:"Dans quels pays se trouvent vos clients actuels ? (ne pas répondre si vous n'avez pas encore de clients à l'international) ?",
-    type : 'champs-reponse'
+    type : 'champs-reponse',
+    coefficient: 1,
+    sous_categorie : "Situation actuelle",
     },
     {
     question:"Quel pourcentage du chiffre d'affaires représenteront vos ventes internationales à horizon 2 ans ?",
     type : "choix-multiple",
+    coefficient: 3,
+    sous_categorie : "Strategie",
     1:{text:"Ne sais pas", score:1},
     2:{text:"Inférieur à 5%", score:2},
     3:{text:"Entre 5% et 20%", score:3},
@@ -186,6 +208,8 @@ const questionnaire_3 = {
     {
     question:"Quel pourcentage du chiffre d'affaires représenteront vos ventes internationales à horizon 5 ans ?",
     type : "choix-multiple",
+    coefficient: 2,
+    sous_categorie : "Strategie",
     1:{text:"Ne sais pas", score:1},
     2:{text:"Inférieur à 5%", score:2},
     3:{text:"Entre 5% et 20%", score:3},
@@ -195,6 +219,8 @@ const questionnaire_3 = {
     {
     question:"Les marchés à l'international ciblés à court terme (2 ans) représentent combien de pays ?",
     type : "choix-multiple",
+    coefficient: 3,
+    sous_categorie : "Strategie",
     1:{text:"0", score:1},
     2:{text:"1 à 2 pays", score:2},
     3:{text:"Entre 2 et 5 pays", score:3},
@@ -203,11 +229,15 @@ const questionnaire_3 = {
     },
     {
         question: "lequels ?",
-        type :"champs-reponse"
+        type :"champs-reponse",
+        coefficient: 1,
+    sous_categorie : "Strategie",
     },
     {
     question:"Comment avez-vous sélectionné ces pays ?",
     type : "choix-multiple",
+    coefficient: 2,
+    sous_categorie : "Strategie",
     1:{text:"Ne sais pas / plus", score:1},
     2:{text:"Parce qu'un de vos collaborateurs est originaire de ce / ces pays ou grâce à des opportunités commerciales ponctuelles", score:2},
     3:{text:"Vos concurrents sont présents sur ce / ces marchés", score:3},
@@ -217,6 +247,8 @@ const questionnaire_3 = {
     {
     question:"Votre équipe a-t-elle connaissance de la culture des pays où vous souhaitez vous développer ?",
     type : "choix-multiple",
+    coefficient: 2,
+    sous_categorie : "Organisation",
     1:{text:"Pas du tout", score:1},
     2:{text:"Plutôt non", score:2},
     3:{text:"Plutôt oui", score:3},
@@ -225,6 +257,8 @@ const questionnaire_3 = {
     {
     question:"Pensez-vous (les dirigeants) disposer des compétences et de l'expérience nécessaires pour la croissance à l’international ?",
     type : "choix-multiple",
+    coefficient: 1,
+    sous_categorie : "Organisation",
     1:{text:"Pas du tout", score:1},
     2:{text:"Plutôt non", score:2},
     3:{text:"Plutôt oui", score:3},
@@ -233,6 +267,8 @@ const questionnaire_3 = {
     {
         question:"Avez-vous une idée de la façon dont vous allez valider votre concept sur le ou les marchés ciblés ?",
         type : "choix-multiple",
+        coefficient: 3,
+        sous_categorie : "Organisation",
         1:{text:"Pas du tout", score:1},
         2:{text:"Plutôt non", score:2},
         3:{text:"Plutôt oui", score:3},
@@ -241,6 +277,8 @@ const questionnaire_3 = {
     {
         question:"Avez-vous une idée de la façon dont vous allez distribuer vos produits / services dans ces pays ?",
         type : "choix-multiple",
+        coefficient: 4,
+        sous_categorie : "Organisation",
         1:{text:"Pas du tout", score:1},
         2:{text:"Plutôt non", score:2},
         3:{text:"Plutôt oui", score:3},
@@ -249,6 +287,8 @@ const questionnaire_3 = {
     {
         question:"Avez-vous une idée des problématiques logistiques que vous rencontrerez sur le ou les marchés adressés ?",
         type : "choix-multiple",
+        coefficient: 3,
+        sous_categorie : "Organisation",
         1:{text:"Pas du tout", score:1},
         2:{text:"Plutôt non", score:2},
         3:{text:"Plutôt oui", score:3},
@@ -257,6 +297,8 @@ const questionnaire_3 = {
     {
         question:"Avez-vous une idée des contraintes réglementaires présentes sur le ou les marchés ciblés",
         type : "choix-multiple",
+        coefficient: 4,
+        sous_categorie : "Organisation",
         1:{text:"Pas du tout", score:1},
         2:{text:"Plutôt non", score:2},
         3:{text:"Plutôt oui", score:2},
@@ -265,6 +307,8 @@ const questionnaire_3 = {
     {
         question:"Pour conclure sur cet axe, quelles sont les problématiques principales que vous rencontrez sur le volet international ?",
         type : 'champs-reponse',
+        coefficient: 1,
+        sous_categorie : "Synthèse",
     },
     ]
 }
@@ -276,6 +320,8 @@ const questionnaire_4 = {
     {
     question:"Avez-vous mis au point et suivez-vous une stratégie d'innovation / de R&D ?",
     type : "choix-multiple",
+    coefficient: 4,
+    sous_categorie : "Situation actuelle",
     1:{text:"Pas du tout", score:1},
     2:{text:"Plutôt non", score:2},
     3:{text:"Plutôt oui", score:3},
@@ -283,11 +329,15 @@ const questionnaire_4 = {
     },
     {
     question:"Quel est le pourcentage de votre chiffre d'affaires réinvesti en Innovation / R&D ?",
-    type : 'champs-reponse'
+    type : 'champs-reponse',
+    coefficient: 1,
+    sous_categorie : "Situation actuelle",
     },
     {
         question:"Votre produit / service peut-il être facilement remplacé par un autre ?",
         type : "choix-multiple",
+        coefficient: 1,
+    sous_categorie : "Strategie",
         1:{
             text:"Pas du tout",
             score :1,
@@ -308,6 +358,8 @@ const questionnaire_4 = {
     {
         question:"Comment décririez-vous votre avance technologique par rapport à vos concurrents ?",
         type : "choix-multiple",
+        coefficient: 2,
+    sous_categorie : "Strategie",
         1:{text :"Vos concurrents sont en avance sur vous",
             score: 1},
         2:{text:"Vous avez la même avance technologique que vos concurrents (pas de différenciation)", score:2},
@@ -318,6 +370,8 @@ const questionnaire_4 = {
     {
     question:"Votre propriété intellectuelle est-elle protégée ?",
     type : "choix-multiple",
+    coefficient: 2,
+    sous_categorie : "Strategie",
     1:{text:"Non, elle n'est pas protégée mais elle pourrait l'être", score:1},
     2:{text:"Non elle n'est pas protégée mais elle pourrait l'être on applicable, elle ne peut pas être protégée", score:2},
     3:{text:"Oui, sur le marché domestique", score:3},
@@ -327,6 +381,8 @@ const questionnaire_4 = {
     {
     question:"Comment qualifieriez-vous la capacité d'adaptation de votre département R&D à votre volonté de croître ?",
     type : "choix-multiple",
+    coefficient: 4,
+    sous_categorie : "Organisation",
     1:{text:"Ne sait pas", score:1},
     2:{text:"Extrêmement lente", score:2},
     3:{text:"Difficile", score:3},
@@ -336,6 +392,8 @@ const questionnaire_4 = {
     {
     question:"Les processus R&D / Innovation sont-ils connus de tous et formalisés ?",
     type : "choix-multiple",
+    coefficient: 3,
+    sous_categorie : "Processus",
     1:{text:"Non formalisés et non connus", score:1},
     2:{text:"Non formalisés mais connus par quelques personnes", score:2},
     3:{text:"Non formalisés mais connus par tous les collaborateurs concernés", score:3},
@@ -345,6 +403,8 @@ const questionnaire_4 = {
     {
         question:"Avez-vous mis en place des KPI / indicateurs de suivi de la performance de la R&D / Innovation vous permettant de suivre la performance de vos processus ?",
         type : "choix-multiple",
+        coefficient: 2,
+    sous_categorie : "KPIs",
         1:{text:"Pas du tout", score:1},
         2:{text:"Partiellement, sur quelques processus", score:2},
         3:{text:"Vous avez mis en place des KPIs / indicateurs et vous effectuez un suivi irrégulier", score:3},
@@ -352,11 +412,15 @@ const questionnaire_4 = {
     },
     {
         question: "Si oui, lequels ?",
-        type :"champs-reponse"
+        type :"champs-reponse",
+        coefficient: 1,
+    sous_categorie : "KPIs",
     },
     {
         question:"Votre processus de prise de décision sur les orientations stratégiques de la R&D est-il efficient ?",
         type : "choix-multiple",
+        coefficient: 2,
+    sous_categorie : "KPIs",
         1:{text:"Pas du tout", score:1},
         2:{text:"Plutôt non", score:2},
         3:{text:"Plutôt oui", score:3},
@@ -365,6 +429,8 @@ const questionnaire_4 = {
     {
         question:"Vos outils R&D / Innovation sont-ils efficients ? (ex : suivi de projets, de coûts, de planning, fichiers partagés, etc.)",
         type : "choix-multiple",
+        coefficient: 4,
+    sous_categorie : "Outils",
         1:{text:"Pas du tout", score:1},
         2:{text:"Plutôt non", score:2},
         3:{text:"Plutôt oui", score:3},
@@ -374,6 +440,8 @@ const questionnaire_4 = {
     {
         question:"Pour conclure sur cet axe, quelles sont les problématiques principales que vous rencontrez sur le volet R&D / Innovation ?",
         type : 'champs-reponse',
+        coefficient: 2,
+    sous_categorie : "Synthese",
     },
     ]
 }
