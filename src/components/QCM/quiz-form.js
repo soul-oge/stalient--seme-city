@@ -5,52 +5,59 @@ import { Checkbox } from 'primereact/checkbox';
 import useUserInternal from "../Auth/authDetails"
 import { InputText } from 'primereact/inputtext';
 import {db} from "../../config/firebase"
-import { doc,updateDoc} from "firebase/firestore";
+import { doc,updateDoc, addDoc} from "firebase/firestore";
 
  
-function EndScreen({score, titre} ) {
+function EndScreen({score, titre, data} ) {
+
+  //console.log(data);
   const currentUser = useUserInternal();
   const setData = async() => {
     try {
+        let chaine = `all_score.${titre}`;
         const docRef = doc(db, "users", currentUser.userId);
-        if(titre === "Développement commercial"){ 
-          await updateDoc(docRef, {
-           "all_score.Développement commercial": score
-        });}
-       
-      else if(titre ===  "R&D et Innovation"){
-        await updateDoc(docRef, {
-          "all_score.R&D et Innovation": score
-        });
-      }
-      else if(titre ===   "Internatonal"){
-        await updateDoc(docRef, {
-          "all_score.Internatonal": score
-        });
-      }
-     
-      else if(titre ===  "Organisation et exploitation"){
-        await updateDoc(docRef, {
-          "all_score.Organisation et exploitation": score
-        });
-      }
-    
-      else if(titre ===  "Capital humain"){
-        await updateDoc(docRef, {
-          "all_score.Capital humain": score
-        });
-      }
-  
-      else if(titre === "Financement"){ 
-        await updateDoc(docRef, {
-          "all_score.Financement": score
-      });}
+        await addDoc(docRef, {titre : data})
 
-      else if(titre === "Business model"){
-        await updateDoc(docRef, {
-          "all_score.Business model": score
-        });
-      }
+      //   if(titre === "Développement commercial"){ 
+      //     await updateDoc(docRef, {
+      //      "all_score.Développement commercial": score
+      //   });}
+       
+      // else if(titre ===  "R&D et Innovation"){
+      //   await updateDoc(docRef, {
+      //     "all_score.R&D et Innovation": score
+      //   });
+      // }
+      // else if(titre ===   "Internatonal"){
+
+
+      //   await updateDoc(docRef, {
+      //     "all_score.Internatonal": score
+      //   });
+      // }
+     
+      // else if(titre ===  "Organisation et exploitation"){
+      //   await updateDoc(docRef, {
+      //     "all_score.Organisation et exploitation": score
+      //   });
+      // }
+    
+      // else if(titre ===  "Capital humain"){
+      //   await updateDoc(docRef, {
+      //     "all_score.Capital humain": score
+      //   });
+      // }
+  
+      // else if(titre === "Financement"){ 
+      //   await updateDoc(docRef, {
+      //     "all_score.Financement": score
+      // });}
+
+      // else if(titre === "Business model"){
+      //   await updateDoc(docRef, {
+      //     "all_score.Business model": score
+      //   });
+      // }
     } catch(error){
         console.error(error);
     }
@@ -77,17 +84,24 @@ function QuestForm({ quizData }) {
       state: "start",
       startTime: performance.now(),
     });
-    const [previousAnswers, setPreviousAnswers] = useState({});
+    const [answersData, setAnswersData] = useState({});
     const questions = quizData.questions ?? [];
     const { score, triviaIndex, state,} = gameState;
-    const loadNextQuestion = (score1, answer) => {
-      setPreviousAnswers({ ...previousAnswers, [triviaIndex]: answer });
+    const loadNextQuestion = (score1, answer, coefficient, sous_categorie) => {
       if (triviaIndex >= questions.length - 1) {
-        setGameState({ ...gameState, state: "end" , score: score + score1}); 
+        setGameState({ ...gameState, state: "end" , score: score + score1});
       } else {
-        // Using the spread operator to copy the gameState and override the triviaIndex.
         setGameState({ ...gameState, state: "running", triviaIndex: triviaIndex + 1, score: score + score1,});
       }
+      setAnswersData({
+        ...answersData,
+        [`question${triviaIndex}`]: {
+          answer,
+          score: score1,
+          coefficient,
+          sous_categorie,
+        },
+      });
     };
     let pageContent;
     if (state === "end") {
@@ -95,12 +109,10 @@ function QuestForm({ quizData }) {
         <EndScreen
           score={score}
           titre={quizData.Catégories}
+          data = {answersData}
         />
       );
     } else {
-      if(previousAnswers[triviaIndex-1] === "0") {
-        setGameState({ ...gameState, triviaIndex: triviaIndex +1})
-      }
     const triviaQuestion = questions[triviaIndex];
     const question = triviaQuestion;
     const answers = Object.keys(triviaQuestion)
@@ -111,7 +123,7 @@ function QuestForm({ quizData }) {
           key={triviaIndex}
           question={question}
           allAnswers={answers}
-          onNextClick={(score, answer) => loadNextQuestion(score, answer)}
+          onNextClick={(score1, answer, coefficient, sous_categorie) => loadNextQuestion(score1, answer, coefficient, sous_categorie)}
     />
     );
     }
@@ -123,13 +135,17 @@ function QuestForm({ quizData }) {
 function TriviaItem({ allAnswers, question, onNextClick }) {
     const [selectedAnswer, setSelectedAnswer] = useState(null);
     const [selectedScore, setSelectedScore] = useState(null);
-  
-    const handleAnswerSelect = (answer, score) => {
+    const [selectedCoefficient, setSelectedCoefficient] = useState(null);
+    const [selectedSousCategorie, setSelectedSousCategorie] = useState(null);
+
+    const handleAnswerSelect = (answer, score, Coefficient, SousCategorie) => {
       setSelectedAnswer(answer);
       setSelectedScore(score);
+      setSelectedCoefficient(Coefficient);
+      setSelectedSousCategorie(SousCategorie);
     };
     const handleSubmit = () => {
-      onNextClick(selectedScore, selectedAnswer);
+      onNextClick(selectedScore, selectedAnswer, selectedCoefficient,selectedSousCategorie);
     };
     const [value, setValue] = useState("");
 
@@ -147,7 +163,7 @@ function TriviaItem({ allAnswers, question, onNextClick }) {
                 name="answer"
                 value={option.text}
                 checked={selectedAnswer === option.text}
-                onChange={() => handleAnswerSelect(option.text, option.score)}
+                onChange={() => handleAnswerSelect(option.text, option.score, question.coefficient, question.sous_categorie)}
                 className="flex-shrink-0"
               />
               <label className="ml-2 flex-grow"  htmlFor={inputId}>{option.text}</label>
@@ -171,7 +187,8 @@ function TriviaItem({ allAnswers, question, onNextClick }) {
              <div key={index} className="flex items-center mb-2 mr-2">
                <Checkbox inputId={`question-${index}`}
                   value={option} 
-                  name={`question-${index}`} 
+                  name={`question-${index}`}
+                  onChange={() => handleAnswerSelect(option.text, option.score, question.coefficient, question.sous_categorie)}
                   />
                <label htmlFor={`question-${index}`} className="ml-2">{option.text}</label>
              </div>
@@ -180,7 +197,7 @@ function TriviaItem({ allAnswers, question, onNextClick }) {
         );
       }
   
-      return null; // Gestion des types de questions inconnus ou non pris en charge
+      return null;
     };
     
     return (
