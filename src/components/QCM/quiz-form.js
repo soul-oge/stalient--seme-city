@@ -6,58 +6,57 @@ import useUserInternal from "../Auth/authDetails"
 import { InputText } from 'primereact/inputtext';
 import {db} from "../../config/firebase"
 import { doc,updateDoc, addDoc} from "firebase/firestore";
-import { useAuth } from './../Auth/useAuth';
+import { UserAuth } from '../../context/AuthContext';
  
 function EndScreen({score, titre, data} ) {
 
-  //console.log(data);
-  const user = useAuth();
+  //console.log(titre);
+  const {user} = UserAuth();
+  console.log(data);
   const setData = async() => {
     try {
         let chaine = `all_score.${titre}`;
         const docRef = doc(db, "users", user.uid);
-        await addDoc(docRef, {titre : data})
+        //await addDoc(docRef, {titre : data})
 
-      //   if(titre === "Développement commercial"){ 
-      //     await updateDoc(docRef, {
-      //      "all_score.Développement commercial": score
-      //   });}
+        if(titre === "Développement commercial"){ 
+          await updateDoc(docRef, {
+           "all_score.Développement commercial": score
+        });}
        
-      // else if(titre ===  "R&D et Innovation"){
-      //   await updateDoc(docRef, {
-      //     "all_score.R&D et Innovation": score
-      //   });
-      // }
-      // else if(titre ===   "Internatonal"){
-
-
-      //   await updateDoc(docRef, {
-      //     "all_score.Internatonal": score
-      //   });
-      // }
+      else if(titre ===  "R&D et Innovation"){
+        await updateDoc(docRef, {
+          "all_score.R&D et Innovation": score
+        });
+      }
+      else if(titre ===   "Internatonal"){
+        await updateDoc(docRef, {
+          "all_score.Internatonal": score
+        });
+      }
      
-      // else if(titre ===  "Organisation et exploitation"){
-      //   await updateDoc(docRef, {
-      //     "all_score.Organisation et exploitation": score
-      //   });
-      // }
+      else if(titre ===  "Organisation et exploitation"){
+        await updateDoc(docRef, {
+          "all_score.Organisation et exploitation": score
+        });
+      }
     
-      // else if(titre ===  "Capital humain"){
-      //   await updateDoc(docRef, {
-      //     "all_score.Capital humain": score
-      //   });
-      // }
+      else if(titre ===  "Capital humain"){
+        await updateDoc(docRef, {
+          "all_score.Capital humain": score
+        });
+      }
   
-      // else if(titre === "Financement"){ 
-      //   await updateDoc(docRef, {
-      //     "all_score.Financement": score
-      // });}
+      else if(titre === "Financement"){ 
+        await updateDoc(docRef, {
+          "all_score.Financement": score
+      });}
 
-      // else if(titre === "Business model"){
-      //   await updateDoc(docRef, {
-      //     "all_score.Business model": score
-      //   });
-      // }
+      else if(titre === "Business model"){
+        await updateDoc(docRef, {
+          "all_score.Business model": score
+        });
+      }
     } catch(error){
         console.error(error);
     }
@@ -181,7 +180,7 @@ function TriviaItem({ allAnswers, question, onNextClick }) {
                </span>)
       }
   
-      if (question.type === 'multiple-reponses') {
+      if (question.type === 'multiple-reponse') {
         return (
           <div className='justify-center'>
             {allAnswers.map((option, index) => {
