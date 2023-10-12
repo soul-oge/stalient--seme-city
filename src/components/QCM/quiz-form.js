@@ -6,16 +6,16 @@ import useUserInternal from "../Auth/authDetails"
 import { InputText } from 'primereact/inputtext';
 import {db} from "../../config/firebase"
 import { doc,updateDoc, addDoc} from "firebase/firestore";
-
+import { useAuth } from './../Auth/useAuth';
  
 function EndScreen({score, titre, data} ) {
 
   //console.log(data);
-  const currentUser = useUserInternal();
+  const user = useAuth();
   const setData = async() => {
     try {
         let chaine = `all_score.${titre}`;
-        const docRef = doc(db, "users", currentUser.userId);
+        const docRef = doc(db, "users", user.uid);
         await addDoc(docRef, {titre : data})
 
       //   if(titre === "Développement commercial"){ 
@@ -67,7 +67,7 @@ setData();
     <div className="">
       <h1>QCM completed</h1>
       <div className="end-screen__stat">
-      <div className="end-screen__stat-label">{currentUser.userId}</div>
+      <div className="end-screen__stat-label">{user.uid}</div>
       <div className="end-screen__stat-label">score</div>
       <div className="end-screen__stat-value">{score}</div>
     </div>
@@ -116,7 +116,7 @@ function QuestForm({ quizData }) {
     const triviaQuestion = questions[triviaIndex];
     const question = triviaQuestion;
     const answers = Object.keys(triviaQuestion)
-    .filter((key) => (key !== 'question'&&key !== 'type'))
+    .filter((key) => key !== 'question' && key !== 'type' && key !== 'coefficient' && key !== 'sous_categorie')
     .map((key) => triviaQuestion[key]);
     pageContent = (
     <TriviaItem
@@ -139,7 +139,7 @@ function TriviaItem({ allAnswers, question, onNextClick }) {
     const [selectedSousCategorie, setSelectedSousCategorie] = useState(null);
 
     const handleAnswerSelect = (answer, score, Coefficient, SousCategorie) => {
-      setSelectedAnswer(answer);
+      setSelectedAnswer(answer)
       setSelectedScore(score);
       setSelectedCoefficient(Coefficient);
       setSelectedSousCategorie(SousCategorie);
@@ -152,7 +152,8 @@ function TriviaItem({ allAnswers, question, onNextClick }) {
     const renderQuestionFields = (question) => {
       if (question.type === 'choix-multiple') {
         return (
-          <ul className="flex justify-center flex-col gap-3">
+          <div className='mx-64 my-12'>
+          <ul className="flex flex-col gap-3">
             {allAnswers.map((option, index) => {
             const inputId = `question-${index}`;
             return (
@@ -171,6 +172,7 @@ function TriviaItem({ allAnswers, question, onNextClick }) {
             );
           })}
         </ul>
+        </div>
         )}
   
       if (question.type === 'champs-reponse') {

@@ -4,6 +4,8 @@ import {doc, setDoc } from "firebase/firestore";
 import React, { useState } from "react";
 import * as Components from "../component"
 import {Link} from 'react-router-dom'
+import { UserAuth } from '../../context/AuthContext';
+// import { signUp } from "./AuthManage"
 
 export const SignUp = () => {
     const all_score = {
@@ -35,9 +37,10 @@ export const SignUp = () => {
           console.log('Error in creating user', error);
         }
       }
-    const signUp = async () => {
+    const { createUser } = UserAuth();
+    const handleSignUp = async () => {
         try {
-            const {user} = await createUserWithEmailAndPassword(auth, Email, Password)
+            const{user} = await createUser(Email, Password);
             createUserDocument(user, Name)
         }catch(err){
              console.error(err)
@@ -56,7 +59,7 @@ export const SignUp = () => {
           value={Password}
           onChange={(e) => setPassword(e.target.value)}/>
         <Link to="/quest">
-            <Components.Button onClick={signUp}>Sign Up</Components.Button>
+            <Components.Button onClick={handleSignUp}>Sign Up</Components.Button>
         </Link>
         </Components.SignUpContainer>
         <Components.OverlayContainer signinIn={signin}>

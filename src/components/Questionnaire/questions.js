@@ -12,7 +12,7 @@ function Questionnaires(){
     if(questions.status === 'error') return (<ErrorMessage>something went wrong</ErrorMessage>)
     return (
         <ul>
-            <li> catégorie</li>
+            <li className='mx-8 font-bold text-lg'> catégorie</li>
             {
                 questions.result.map((quest) =>
                 (

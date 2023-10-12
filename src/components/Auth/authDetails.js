@@ -1,77 +1,35 @@
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import React, { useEffect, useState } from "react";
-import { auth } from "../../config/firebase.js"
+import PersonIcon from '@mui/icons-material/Person';
+import { signOutUser } from "./AuthManage";
+import { useAuth } from './useAuth';
+import { UserAuth } from '../../context/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 const AuthDetails = () => {
-  const [authUser, setAuthUser] = useState(null);
+  const {authUser, loading }= useAuth();
+  const { user, logout } = UserAuth();
+  const navigate = useNavigate();
 
-  useEffect(() => {
-    const listen = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        setAuthUser(user);
-      } else {
-        setAuthUser(null);
-      }
-    });
-
-    return () => {
-      listen();
-    };
-  }, []);
-
-  const userSignOut = () => {
-    signOut(auth)
-      .then(() => {
-        console.log("sign out successful");
-      })
-      .catch((error) => console.log(error));
+  const handleLogout = async () => {
+    try {
+      await logout();
+      navigate('/');
+      console.log('You are logged out')
+    } catch (e) {
+      console.log(e.message);
+    }
   };
-
   return (
-    <div>
-      {authUser ? (
-        <>
-          <p>{`Signed In as ${authUser.email}`}</p>
-          <button onClick={userSignOut}>Sign Out</button>
-        </>
-      ) : (
-        <p>Signed Out</p>
-      )}
+   <div className='max-w-[600px] mx-auto my-16 p-4'>
+      <h1 className='text-2xl font-bold py-4'>Account</h1>
+      <p> <PersonIcon />User Email: {user && user.email}</p>
+
+      <button onClick={handleLogout} className='border px-6 py-2 my-4'>
+        Logout
+      </button>
     </div>
   );
 };
 
-function useUserInternal() {
-  const [userState, setUserState] = useState({
-    user: auth.currentUser,
-    isLoading: auth.currentUser === null ? true : false,
-    error: null,
-  });
-  const { user, isLoading, error } = userState;
-  const isSignedIn = user !== null;
-  const userId = isSignedIn ? user.uid : undefined;
-
-  useEffect(() => {
-
-    const onChange = (currentUser) => {
-      setUserState({ user: currentUser, isLoading: false, error: null });
-    };
-    const onError = (error) => {
-      console.error(error);
-      setUserState({ user: null, isLoading: false, error });
-    };
-    const unsubscribe = auth.onAuthStateChanged(onChange, onError);
-    return unsubscribe;
-  }, []);
-
-  
-  return {
-    user,
-    userId,
-    isLoading, 
-    isSignedIn,
-    error,
-  };
-}
 export {AuthDetails};
-export default useUserInternal;
