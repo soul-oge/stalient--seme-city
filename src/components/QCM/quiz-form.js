@@ -7,6 +7,7 @@ import { InputText } from 'primereact/inputtext';
 import {db} from "../../config/firebase"
 import { doc,updateDoc, addDoc} from "firebase/firestore";
 import { UserAuth } from '../../context/AuthContext';
+import { Link } from 'react-router-dom';
  
 function EndScreen({score, titre, data} ) {
 
@@ -63,13 +64,16 @@ function EndScreen({score, titre, data} ) {
 }
 setData();
   return (
-    <div className="">
-      <h1>QCM completed</h1>
-      <div className="end-screen__stat">
-      <div className="end-screen__stat-label">{user.uid}</div>
-      <div className="end-screen__stat-label">score</div>
-      <div className="end-screen__stat-value">{score}</div>
-    </div>
+    <div className="max-w-[600px] mx-auto my-16 p-4">
+      <h1>{titre} completé</h1>
+      <div className="">
+        <div className="text-2xl font-bold py-4">{user.uid}</div>
+        <div className="text-2xl font-bold py-4">score</div>
+        <div className="text-2xl font-bold py-4">{score}</div>
+        <Link to ="/quest">
+          <button className='border px-6 py-2 my-4'> go to quiz </button>
+        </Link>
+      </div>
     </div>
   )
 
@@ -114,9 +118,7 @@ function QuestForm({ quizData }) {
     } else {
     const triviaQuestion = questions[triviaIndex];
     const question = triviaQuestion;
-    const answers = Object.keys(triviaQuestion)
-    .filter((key) => key !== 'question' && key !== 'type' && key !== 'coefficient' && key !== 'sous_categorie')
-    .map((key) => triviaQuestion[key]);
+    const answers = triviaQuestion.answers;
     pageContent = (
     <TriviaItem
           key={triviaIndex}

@@ -60,12 +60,6 @@ const App = () => {
         path="admin"
         element={<ProtectedRoute element={<Dashboard />}/>}
       />
-      {/* <Route path="/quest" element={<Questionnaires_page />}/> */}
-      {/* Les pages ci-dessous nécessitent une authentification
-      <ProtectedRoute path="/users" element={<AuthDetails />} user={user} />
-      <ProtectedRoute path="quest/start_qcm/:id" element={<StartQcm />} user={user} />
-      <ProtectedRoute path="quest/edit_qcm/:id" element={<EditQcm />} user={user} />
-      <ProtectedRoute path="admin" element={<Dashboard />} user={user} /> */}
 
       <Route path="*" element={<NoMatch />} />
     </Routes> 
