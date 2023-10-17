@@ -59,6 +59,7 @@ function QuizForm({ initialData = {}, onSave, onDelete, isSaving }) {
     title: initialData.Catégories ?? "",
     description: initialData.description ?? "",
     difficulty: initialData.difficulty ?? "easy",
+    questions: initialData.questions || [],
   });
 
   const onSubmit = (e) => {
@@ -75,6 +76,76 @@ function QuizForm({ initialData = {}, onSave, onDelete, isSaving }) {
     setFormValues((prev) => ({ ...prev, description: e.target.value }));
   const onDifficultyChange = (e) =>
     setFormValues((prev) => ({ ...prev, difficulty: e.target.value }));
+  
+    const addQuestion = () => {
+      setFormValues((prev) => ({
+        ...prev,
+        questions: [
+          ...prev.questions,
+          {
+            question: '',
+            coefficient: 1,
+            sous_categorie: '',
+            type : 'choix-multiple',
+            answers: [],
+          },
+        ],
+      }));
+    };
+    const onQuestionChange = (e, index) => {
+      const newQuestions = [...formValues.questions];
+      newQuestions[index].question = e.target.value;
+      setFormValues((prev) => ({
+        ...prev,
+        questions: newQuestions,
+      }));
+    };
+  
+    const onCoefficientChange = (e, index) => {
+      const newQuestions = [...formValues.questions];
+      newQuestions[index].coefficient = e.target.value;
+      setFormValues((prev) => ({
+        ...prev,
+        questions: newQuestions,
+      }));
+    };
+    const onSubcategoryChange = (e, index) => {
+      const newQuestions = [...formValues.questions];
+      newQuestions[index].sous_categorie = e.target.value;
+      setFormValues((prev) => ({
+        ...prev,
+        questions: newQuestions,
+      }));
+    };
+  
+    const addAnswer = (index) => {
+      const newQuestions = [...formValues.questions];
+      newQuestions[index].answers.push({
+        text: '',
+        score: 0,
+      });
+      setFormValues((prev) => ({
+        ...prev,
+        questions: newQuestions,
+      }));
+    };
+    const onAnswerChange = (e, questionIndex, answerIndex) => {
+      const newQuestions = [...formValues.questions];
+      newQuestions[questionIndex].answers[answerIndex].text = e.target.value;
+      setFormValues((prev) => ({
+        ...prev,
+        questions: newQuestions,
+      }));
+    };
+  
+    const onScoreChange = (e, questionIndex, answerIndex) => {
+      const newQuestions = [...formValues.questions];
+      newQuestions[questionIndex].answers[answerIndex].score = e.target.value;
+      setFormValues((prev) => ({
+        ...prev,
+        questions: newQuestions,
+      }));
+    };
 
   return (
     <Form onSubmit={onSubmit} disabled={isSaving}>
@@ -94,18 +165,54 @@ function QuizForm({ initialData = {}, onSave, onDelete, isSaving }) {
         onChange={onDifficultyChange}
       />
       <h2>Questions</h2>
-      {initialData.questions.map((question, index) => (
-        <div key={index}>
-          <h3>Question {index + 1}</h3>
-          <p>{question.question}</p>
+      {formValues.questions.map((question, questionIndex) => (
+        <div key={questionIndex}>
+          <h3>Question {questionIndex + 1}</h3>
+          <input
+            type="text"
+            placeholder="Question"
+            value={question.question}
+            onChange={(e) => onQuestionChange(e, questionIndex)}
+          />
+          <input
+            type="number"
+            placeholder="Coefficient"
+            value={question.coefficient}
+            onChange={(e) => onCoefficientChange(e, questionIndex)}
+          />
+          <input
+            type="text"
+            placeholder="Sous-categorie"
+            value={question.sous_categorie}
+            onChange={(e) => onSubcategoryChange(e, questionIndex)}
+          />
           <h4>Réponses :</h4>
           <ul>
             {Array.isArray(question.answers) && question.answers.map((answer, answerIndex) => (
-          <li key={answerIndex}>{answer.text}</li>
-          ))}
-         </ul>
+              <li key={answerIndex}>
+                <input
+                  type="text"
+                  placeholder="Réponse"
+                  value={answer.text}
+                  onChange={(e) => onAnswerChange(e, questionIndex, answerIndex)}
+                />
+                <input
+                  type="number"
+                  placeholder="Score"
+                  value={answer.score}
+                  onChange={(e) => onScoreChange(e, questionIndex, answerIndex)}
+                />
+              </li>
+            ))}
+          </ul>
+          <button type="button" onClick={() => addAnswer(questionIndex)}>
+            Ajouter une réponse
+          </button>
         </div>
       ))}
+      <button type="button" onClick={addQuestion}>
+        Ajouter une question
+      </button>
       <p>TODO!</p>
       <div className="quiz-form__buttons">
         <button type="submit">Save Quiz</button>
@@ -117,6 +224,18 @@ function QuizForm({ initialData = {}, onSave, onDelete, isSaving }) {
   );
 }
 
+     {/* {initialData.questions.map((question, index) => (
+        <div key={index}>
+          <h3>Question {index + 1}</h3>
+          <p>{question.question}</p>
+          <h4>Réponses :</h4>
+          <ul>
+            {Array.isArray(question.answers) && question.answers.map((answer, answerIndex) => (
+          <li key={answerIndex}>{answer.text}</li>
+          ))}
+         </ul>
+        </div>
+      ))} */}
 // function QuizForm({ initialData = {}, onSave, onDelete, isSaving }) {
 //   const [formValues, setFormValues] = useState({
 //     title: initialData.title ?? "",
