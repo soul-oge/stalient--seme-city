@@ -9,7 +9,7 @@ const difficultyOptions = [
 ];
 function Form({ onSubmit, disabled, children }) {
     return (
-      <form onSubmit={onSubmit}>
+      <form onSubmit={onSubmit} className="mx-24 max-w-3xl">
         <fieldset disabled={disabled} className="form__fieldset-wrapper">
           {children}
         </fieldset>
@@ -157,60 +157,70 @@ function QuizForm({ initialData = {}, onSave, onDelete, isSaving }) {
         value={formValues.description}
         onChange={onDescriptionChange}
       />
-      <SelectInput
+      {/* <SelectInput
         label="Difficulty"
         name="difficulty"
         options={difficultyOptions}
         value={formValues.difficulty}
         onChange={onDifficultyChange}
-      />
+      /> */}
       <h2>Questions</h2>
       {formValues.questions.map((question, questionIndex) => (
         <div key={questionIndex}>
           <h3>Question {questionIndex + 1}</h3>
-          <input
-            type="text"
-            placeholder="Question"
-            value={question.question}
-            onChange={(e) => onQuestionChange(e, questionIndex)}
-          />
+          <div>
+          <label className="form__label"> Coefficient </label>
           <input
             type="number"
             placeholder="Coefficient"
             value={question.coefficient}
             onChange={(e) => onCoefficientChange(e, questionIndex)}
           />
-          <input
-            type="text"
-            placeholder="Sous-categorie"
+          </div>
+          <TextInput
+            label="Sous-categorie"
+            name="Sous-categorie"
             value={question.sous_categorie}
             onChange={(e) => onSubcategoryChange(e, questionIndex)}
+          />
+          <label className="form__label"> Question</label>
+          <textarea
+            className="w-3/4 p-2 rounded border"
+            placeholder="Question"
+            value={question.question}
+            onChange={(e) => onQuestionChange(e, questionIndex)}
           />
           <h4>Réponses :</h4>
           <ul>
             {Array.isArray(question.answers) && question.answers.map((answer, answerIndex) => (
               <li key={answerIndex}>
-                <input
-                  type="text"
-                  placeholder="Réponse"
-                  value={answer.text}
-                  onChange={(e) => onAnswerChange(e, questionIndex, answerIndex)}
-                />
+                <label className="form__label"> Score </label>
+                <div>
                 <input
                   type="number"
                   placeholder="Score"
                   value={answer.score}
                   onChange={(e) => onScoreChange(e, questionIndex, answerIndex)}
                 />
+                </div>
+                <label className="form__label"> Reponse {answerIndex + 1}</label>
+                <textarea
+                  className="w-3/4 p-2 rounded border"
+                  placeholder="Réponse"
+                  value={answer.text}
+                  onChange={(e) => onAnswerChange(e, questionIndex, answerIndex)}
+                />
               </li>
             ))}
           </ul>
-          <button type="button" onClick={() => addAnswer(questionIndex)}>
+          <button type="button" onClick={() => addAnswer(questionIndex)}
+          className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mt-2">
             Ajouter une réponse
           </button>
         </div>
       ))}
-      <button type="button" onClick={addQuestion}>
+      <button type="button" onClick={addQuestion}
+      className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mt-4">
         Ajouter une question
       </button>
       <p>TODO!</p>
@@ -223,106 +233,5 @@ function QuizForm({ initialData = {}, onSave, onDelete, isSaving }) {
     </Form>
   );
 }
-
-     {/* {initialData.questions.map((question, index) => (
-        <div key={index}>
-          <h3>Question {index + 1}</h3>
-          <p>{question.question}</p>
-          <h4>Réponses :</h4>
-          <ul>
-            {Array.isArray(question.answers) && question.answers.map((answer, answerIndex) => (
-          <li key={answerIndex}>{answer.text}</li>
-          ))}
-         </ul>
-        </div>
-      ))} */}
-// function QuizForm({ initialData = {}, onSave, onDelete, isSaving }) {
-//   const [formValues, setFormValues] = useState({
-//     title: initialData.title ?? "",
-//     description: initialData.description ?? "",
-//     difficulty: initialData.difficulty ?? "easy",
-//     questions: [], // Utilisez un tableau pour stocker les questions
-//   });
-
-//   const [showCreateQuestion, setShowCreateQuestion] = useState(false);
-
-//   const toggleCreateQuestion = () => {
-//     setShowCreateQuestion(!showCreateQuestion);
-//   };
-
-//   const addQuestion = (questionData) => {
-//     setFormValues((prev) => ({
-//       ...prev,
-//       questions: [...prev.questions, questionData],
-//     }));
-//   };
-
-//   const onSubmit = (e) => {
-//     e.preventDefault();
-//     onSave(formValues);
-//   };
-
-//   const onTitleChange = (e) => {
-//     setFormValues((prev) => ({
-//       ...prev,
-//       title: e.target.value,
-//     }));
-//   };
-
-//   const onDescriptionChange = (e) =>
-//     setFormValues((prev) => ({
-//       ...prev,
-//       description: e.target.value,
-//     }));
-
-//   const onDifficultyChange = (e) =>
-//     setFormValues((prev) => ({
-//       ...prev,
-//       difficulty: e.target.value,
-//     }));
-
-//   return (
-//     <Form onSubmit={onSubmit} disabled={isSaving}>
-//       <h2>Quiz Info</h2>
-//       <TextInput
-//         label="Title"
-//         name="title"
-//         value={formValues.title}
-//         onChange={onTitleChange}
-//       />
-//       <TextInput
-//         label="Description"
-//         name="description"
-//         value={formValues.description}
-//         onChange={onDescriptionChange}
-//       />
-//       <SelectInput
-//         label="Difficulty"
-//         name="difficulty"
-//         options={difficultyOptions}
-//         value={formValues.difficulty}
-//         onChange={onDifficultyChange}
-//       />
-//       <h2>Questions</h2>
-//       <button type="button" onClick={toggleCreateQuestion}>
-//         Ajouter une nouvelle question
-//       </button>
-//       {showCreateQuestion && (
-//         <CreateQuestion onSave={addQuestion} />
-//       )}
-//       {formValues.questions.map((question, index) => (
-//         <div key={index}>
-//           {/* Affichez les détails de chaque question ici */}
-//         </div>
-//       ))}
-//       <div className="quiz-form__buttons">
-//         <button type="submit">Save Quiz</button>
-//         <button type="button" onClick={onDelete}>
-//           Delete Quiz
-//         </button>
-//       </div>
-//     </Form>
-//   );
-// }
 
 export default QuizForm;

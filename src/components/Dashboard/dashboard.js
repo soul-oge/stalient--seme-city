@@ -12,10 +12,13 @@ const Dashboard = () => {
   
         const usersData = snapshot.docs.map(doc => {
             const userData = doc.data();
-            const scores = Object.entries(userData.all_score).map(([category, score]) => ({
-              category,
-              score
-            }));
+            const scores = Object.entries(userData.all_score).map(([category, data]) => {
+              const totalScore = data.total_score || 0; // Si total_score n'existe pas, utilisez 0 par défaut
+              return {
+                category,
+                totalScore,
+              };
+            });
             userData.scores = scores;
             return userData;
           });
@@ -31,7 +34,6 @@ return (
     {users.map(user => (
       <a
         key={user.email}
-        href={`/users/${user.email}`} // ou tout autre lien que tu veux utiliser pour afficher les détails de l'utilisateur
         className="border p-4 rounded-lg hover:bg-gray-100"
       >
         <h2 className="font-bold text-lg">{user.Name}</h2>
@@ -39,7 +41,7 @@ return (
           {user.scores.map(score => (
             <li key={score.category}>
               <span className="font-semibold">{score.category}: </span>
-              <span>{score.score}</span>
+              <span>{score.totalScore}</span>
             </li>
           ))}
         </ul>

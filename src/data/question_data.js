@@ -487,3 +487,38 @@ const questionnaire_4 = {
 
 const questions  = [questionnaire_1, questionnaire_2, questionnaire_3, questionnaire_4]
 export default questions
+
+const temp = {
+    all_score : {
+        "Développement commercial":{
+            total_score : 42,
+            question0 : {
+                answer : "oui",
+                coefficient :4,
+                score : 1,
+                sous_categorie : "situation actuelle"
+            },
+            question1 : {
+                answer : "oui",
+                coefficient :2,
+                score : 1,
+                sous_categorie : "situation actuelle"
+            }
+        },
+        "Développement":{
+            total_score : 42,
+            question0 : {
+                answer : "oui",
+                coefficient :4,
+                score : 1,
+                sous_categorie : "situation actuelle"
+            },
+            question1 : {
+                answer : "oui",
+                coefficient :2,
+                score : 1,
+                sous_categorie : "situation actuelle"
+            }
+        }
+    }
+}

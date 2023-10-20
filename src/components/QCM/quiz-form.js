@@ -5,64 +5,26 @@ import { Checkbox } from 'primereact/checkbox';
 import useUserInternal from "../Auth/authDetails"
 import { InputText } from 'primereact/inputtext';
 import {db} from "../../config/firebase"
-import { doc,updateDoc, addDoc} from "firebase/firestore";
+import { doc,updateDoc} from "firebase/firestore";
 import { UserAuth } from '../../context/AuthContext';
 import { Link } from 'react-router-dom';
  
 function EndScreen({score, titre, data} ) {
 
-  //console.log(titre);
   const {user} = UserAuth();
-  console.log(data);
-  const setData = async() => {
+
+  const updateUserData = async () => {
     try {
-        let chaine = `all_score.${titre}`;
-        const docRef = doc(db, "users", user.uid);
-        //await addDoc(docRef, {titre : data})
-
-        if(titre === "Développement commercial"){ 
-          await updateDoc(docRef, {
-           "all_score.Développement commercial": score
-        });}
-       
-      else if(titre ===  "R&D et Innovation"){
-        await updateDoc(docRef, {
-          "all_score.R&D et Innovation": score
-        });
-      }
-      else if(titre ===   "Internatonal"){
-        await updateDoc(docRef, {
-          "all_score.Internatonal": score
-        });
-      }
-     
-      else if(titre ===  "Organisation et exploitation"){
-        await updateDoc(docRef, {
-          "all_score.Organisation et exploitation": score
-        });
-      }
-    
-      else if(titre ===  "Capital humain"){
-        await updateDoc(docRef, {
-          "all_score.Capital humain": score
-        });
-      }
-  
-      else if(titre === "Financement"){ 
-        await updateDoc(docRef, {
-          "all_score.Financement": score
-      });}
-
-      else if(titre === "Business model"){
-        await updateDoc(docRef, {
-          "all_score.Business model": score
-        });
-      }
-    } catch(error){
-        console.error(error);
+      const docRef = doc(db, 'users', user.uid);
+      await updateDoc(docRef, {
+        [`all_score.${titre}`]: data,
+        [`all_score.${titre}.total_score`] : score
+      });
+    } catch (error) {
+      console.error('Erreur lors de la mise à jour des données de l\'utilisateur :', error);
     }
-}
-setData();
+  }
+
   return (
     <div className="max-w-[600px] mx-auto my-16 p-4">
       <h1>{titre} completé</h1>
@@ -73,10 +35,10 @@ setData();
         <Link to ="/quest">
           <button className='border px-6 py-2 my-4'> go to quiz </button>
         </Link>
+        <button className='border px-6 py-2 my-4'onClick={updateUserData}>Soumettre les résultats</button>
       </div>
     </div>
   )
-
 }
   
 
@@ -92,9 +54,9 @@ function QuestForm({ quizData }) {
     const { score, triviaIndex, state,} = gameState;
     const loadNextQuestion = (score1, answer, coefficient, sous_categorie) => {
       if (triviaIndex >= questions.length - 1) {
-        setGameState({ ...gameState, state: "end" , score: score + score1});
+        setGameState({ ...gameState, state: "end" , score: score + (score1*coefficient)});
       } else {
-        setGameState({ ...gameState, state: "running", triviaIndex: triviaIndex + 1, score: score + score1,});
+        setGameState({ ...gameState, state: "running", triviaIndex: triviaIndex + 1, score: score + (score1*coefficient),});
       }
       setAnswersData({
         ...answersData,
@@ -199,7 +161,6 @@ function TriviaItem({ allAnswers, question, onNextClick }) {
           </div>
         );
       }
-  
       return null;
     };
     
