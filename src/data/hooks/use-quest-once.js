@@ -13,7 +13,7 @@ function useQuestOnce(sessionId) {
             setQuestState({status: "loading", snapshot:null, error:null});
             try{
                 const docRef = doc(db, "Questionnaires", sessionId);
-                const snapshot = await getDoc(docRef);;
+                const snapshot = await getDoc(docRef);
                 setQuestState({status: "success", snapshot, error: null});
             }catch(error) {
                 console.error(error);

@@ -522,3 +522,50 @@ const temp = {
         }
     }
 }
+
+const user = {
+    Name : "ds",
+    total_score : 42,
+    all_score: {
+        "Développement commercial" : {
+            question0 : {
+                answer : "oui",
+                coefficient :4,
+                score : 1,
+                sous_categorie : "situation actuelle"
+            },
+            question1 : {
+                answer : "oui",
+                coefficient :4,
+                score : 1,
+                sous_categorie : "situation actuelle"
+            },
+            question3 : {
+                answer : "oui",
+                coefficient :4,
+                score : 1,
+                sous_categorie : "KPI"
+            }
+        }, 
+        "R1D Innovation" : {
+            question0 : {
+                answer : "oui",
+                coefficient :4,
+                score : 1,
+                sous_categorie : "situation actuelle"
+            },
+            question1 : {
+                answer : "oui",
+                coefficient :4,
+                score : 1,
+                sous_categorie : "situation actuelle"
+            },
+            question3 : {
+                answer : "oui",
+                coefficient :4,
+                score : 1,
+                sous_categorie : "KPI"
+            }
+        }
+    }
+}

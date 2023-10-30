@@ -9,9 +9,8 @@ import Questionnaires_page from './components/Questionnaire/questions-page'
 import StartQcm from "./components/QCM/qcm-page";
 import EditQcm from "./components/Edit/edit-qcm-page"
 import Dashboard from "./components/Dashboard/dashboard"
-import useUserInternal from "./components/Auth/authDetails";
-import { useAuth } from './components/Auth/useAuth';
 import { UserAuth } from './context/AuthContext';
+import UserDetail from './components/Dashboard/Score_Details';
 
 function ProtectedRoute({ element: Component}) {
   const { user} = UserAuth();
@@ -59,6 +58,10 @@ const App = () => {
       <Route
         path="admin"
         element={<ProtectedRoute element={<Dashboard />}/>}
+      />
+      <Route
+        path="admin/:userId"
+        element={<ProtectedRoute element={<UserDetail />}/>}
       />
 
       <Route path="*" element={<NoMatch />} />
