@@ -56,9 +56,8 @@ function Form({ onSubmit, disabled, children }) {
 function QuizForm({ initialData = {}, onSave, onDelete, isSaving }) {
   console.log(initialData);
   const [formValues, setFormValues] = useState({
-    title: initialData.Catégories ?? "",
+    Titre: initialData.Catégories ?? "",
     description: initialData.description ?? "",
-    difficulty: initialData.difficulty ?? "easy",
     questions: initialData.questions || [],
   });
 
@@ -69,14 +68,12 @@ function QuizForm({ initialData = {}, onSave, onDelete, isSaving }) {
 
   const onTitleChange = (e) => {
     setFormValues((prev) => {
-      return { ...prev, title: e.target.value };
+      return { ...prev, Titre: e.target.value };
     });
   };
   const onDescriptionChange = (e) =>
     setFormValues((prev) => ({ ...prev, description: e.target.value }));
-  const onDifficultyChange = (e) =>
-    setFormValues((prev) => ({ ...prev, difficulty: e.target.value }));
-  
+
     const addQuestion = () => {
       setFormValues((prev) => ({
         ...prev,

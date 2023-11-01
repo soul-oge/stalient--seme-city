@@ -55,7 +55,7 @@ const UserDetail = () => {
           <ul>
             {Object.entries(userData.all_score).map(([category, data]) => (
               <li key={category} className="mb-2">
-                <span className="font-bold">{category}:</span> {data.categoryScore}
+                <span className="font-bold">{category}:</span> {data.total_score}
                 <h3 className="text-md mt-2 mb-1">Sous-catégories :</h3>
                 <ul>
                   {Object.entries(userData.categoryScores[category]).map(([subcategory, score]) => (

@@ -9,13 +9,11 @@ const Dashboard = () => {
     useEffect(() => {
       const fetchData = async () => {
         const snapshot = await getDocs(collection(db, "users"));
-        // const usersSnapshot = await firestore.collection('users').get();
-  
         const usersData = snapshot.docs.map(doc => {
             const userData = doc.data();
             const userId = doc.id;
             const scores = Object.entries(userData.all_score).map(([category, data]) => {
-              const totalScore = data.total_score || 0; // Si total_score n'existe pas, utilisez 0 par défaut
+              const totalScore = data.total_score || 0;
               return {
                 category,
                 totalScore,
@@ -46,8 +44,7 @@ return (
             <li key={score.category}>
               <span className="font-semibold">{score.category}: </span>
               <span>{score.totalScore}</span>
-            </li>
-            
+            </li>           
           ))}
         </ul>
       </a>
