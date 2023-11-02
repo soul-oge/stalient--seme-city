@@ -9,6 +9,7 @@ import { doc, getDoc } from 'firebase/firestore'; // Assurez-vous d'importer les
 const UserDetail = () => {
    const {userId} = useParams();
    const [userData, setUserData] = useState(null);
+   const [maxScorelist, setMaxScoreList] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -17,24 +18,39 @@ const UserDetail = () => {
       if (userDoc.exists()) {
         const userData = userDoc.data();
 
-        userData.total_score = 0;
+        // userData.total_score = 0;
+        // for (const category in userData.all_score) {
+        //   userData.total_score += userData.all_score[category].categoryScore;
+        // }
+        const maxScorelist = {};
         for (const category in userData.all_score) {
-          userData.total_score += userData.all_score[category].categoryScore;
-        }
-        userData.subcategoryScores = {};
-        userData.categoryScores = {};
-
-        for (const category in userData.all_score) {
-          if (!userData.categoryScores[category]) {
-            userData.categoryScores[category] = {};
+          if (!maxScorelist[category]) {
+            maxScorelist[category] = {};
           }
+          for (const questionKey in userData.all_score[category]) {
+            const question = userData.all_score[category][questionKey];
+            const subcategory = question.sous_categorie;
+            if (!maxScorelist[category][subcategory]) {
+              maxScorelist[category][subcategory] = 0;
+            }
+          if(question.maxScore) {
+            maxScorelist[category][subcategory] += question.maxScore;
+          }
+        }
+      }
+      userData.subcategoryScores = {};
+      userData.categoryScores = {};
+      for (const category in userData.all_score) {
+        if (!userData.categoryScores[category]) {
+          userData.categoryScores[category] = {};
+        }
         for (const questionKey in userData.all_score[category]) {
           const question = userData.all_score[category][questionKey];
           const subcategory = question.sous_categorie;
           if (!userData.categoryScores[category][subcategory]) {
             userData.categoryScores[category][subcategory] = 0;
           }
-          userData.categoryScores[category][subcategory] += question.score * question.coefficient;
+          userData.categoryScores[category][subcategory] += ((question.score * question.coefficient) / (maxScorelist[category][subcategory])) *100;
         }
       }
       setUserData(userData);
@@ -50,7 +66,6 @@ const UserDetail = () => {
       {userData ? (
         <div className="bg-white rounded p-4 shadow-md">
           <h1 className="text-2xl font-bold mb-4">Nom de l'utilisateur : {userData.Name}</h1>
-          <p className="text-lg">Score total : {userData.total_score}</p>
           <h2 className="text-lg mt-4 mb-2">Scores par catégorie :</h2>
           <ul>
             {Object.entries(userData.all_score).map(([category, data]) => (

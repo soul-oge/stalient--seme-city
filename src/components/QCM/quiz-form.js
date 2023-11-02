@@ -52,7 +52,7 @@ function QuestForm({ quizData }) {
     const [answersData, setAnswersData] = useState({});
     const questions = quizData.questions ?? [];
     const { score, triviaIndex, state,} = gameState;
-    const loadNextQuestion = (score1, answer, coefficient, sous_categorie) => {
+    const loadNextQuestion = (score1, answer, coefficient, sous_categorie, maxScore) => {
       if (triviaIndex >= questions.length - 1) {
         setGameState({ ...gameState, state: "end" , score: score + (score1*coefficient)});
       } else {
@@ -65,6 +65,7 @@ function QuestForm({ quizData }) {
           score: score1,
           coefficient,
           sous_categorie,
+          maxScore,
         },
       });
     };
@@ -86,7 +87,7 @@ function QuestForm({ quizData }) {
           key={triviaIndex}
           question={question}
           allAnswers={answers}
-          onNextClick={(score1, answer, coefficient, sous_categorie) => loadNextQuestion(score1, answer, coefficient, sous_categorie)}
+          onNextClick={(score1, answer, coefficient, sous_categorie, maxScore) => loadNextQuestion(score1, answer, coefficient, sous_categorie, maxScore)}
     />
     );
     }
@@ -100,15 +101,21 @@ function TriviaItem({ allAnswers, question, onNextClick }) {
     const [selectedScore, setSelectedScore] = useState(null);
     const [selectedCoefficient, setSelectedCoefficient] = useState(null);
     const [selectedSousCategorie, setSelectedSousCategorie] = useState(null);
+    const [maxScore, setMaxScore] = useState(null);
 
+    //const getMaxScore = () => {
+    
+    //}
     const handleAnswerSelect = (answer, score, Coefficient, SousCategorie) => {
       setSelectedAnswer(answer)
       setSelectedScore(score);
       setSelectedCoefficient(Coefficient);
       setSelectedSousCategorie(SousCategorie);
+      let temp = question.coefficient * allAnswers.length;
+      setMaxScore(temp);
     };
     const handleSubmit = () => {
-      onNextClick(selectedScore, selectedAnswer, selectedCoefficient,selectedSousCategorie);
+      onNextClick(selectedScore, selectedAnswer, selectedCoefficient,selectedSousCategorie, maxScore);
     };
     const [value, setValue] = useState("");
 
@@ -163,11 +170,11 @@ function TriviaItem({ allAnswers, question, onNextClick }) {
       }
       return null;
     };
-    
+   // getMaxScore();
     return (
       <div>
         <p className="trivia-item__question">{question.question}</p>
-        {renderQuestionFields(question)}
+        {renderQuestionFields(question, maxScore)}
         <button className= "trivia-item__button trivia-item__next-button" onClick={handleSubmit}>
           Next ➡
         </button>
