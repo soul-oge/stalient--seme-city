@@ -50,7 +50,7 @@ const UserDetail = () => {
           if (!userData.categoryScores[category][subcategory]) {
             userData.categoryScores[category][subcategory] = 0;
           }
-          userData.categoryScores[category][subcategory] += ((question.score * question.coefficient) / (maxScorelist[category][subcategory])) *100;
+          userData.categoryScores[category][subcategory] += ((question.score * question.coefficient) / (maxScorelist[category][subcategory] )) *100;
         }
       }
       setUserData(userData);
