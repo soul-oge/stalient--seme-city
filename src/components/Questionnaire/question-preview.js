@@ -6,15 +6,15 @@ import { DataView } from 'primereact/dataview';
 function Questionnaire_preview({ id, data }) {
     let { Titre, Catégories} = data;
   
-    if (!Titre) Titre = "Untitled";
-    if (!Catégories) Catégories = "No description provided.";
+    if (!Titre) Titre = "Non titré";
+    if (!Catégories) Catégories = "Pas de description fournie";
     return (
       <div className="container">
       <article className="quiz-preview">
         <h3 className="quiz-preview-title">{Titre}</h3>
         <p className="quiz-preview-description">{Catégories}</p>
         <Link to={`start_qcm/${id}`} >
-          <button className="quiz-preview_play">Start</button>
+          <button className="quiz-preview_play">commencez</button>
         </Link>
       </article>
       </div>

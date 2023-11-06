@@ -17,7 +17,7 @@ const AuthenticatedNavbar = () => {
     <a href="/">Home</a>
     {user? (
       <a href="/users" className="flex items-center">
-        <PersonIcon className="mr-2" /> {`Signed In as ${user.email}`}
+        <PersonIcon className="mr-2" /> {`Connecter avec ${user.email}`}
       </a>
     ) : (
       <p>Signed Out</p>

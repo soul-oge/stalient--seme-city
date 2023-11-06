@@ -51,11 +51,11 @@ export const SignUp = () => {
         <Components.Container>
         <Components.SignUpContainer signinIn={signin}>
         <Components.Title>Create Account</Components.Title>
-        <Components.Input type='text' placeholder='Company Name' value={Name}
+        <Components.Input type='text' placeholder='le nom de compagnie' value={Name}
           onChange={(e) => setName(e.target.value)}/>
         <Components.Input type='email'placeholder='Email' value={Email}
           onChange={(e) => setEmail(e.target.value)} />
-        <Components.Input type='password' placeholder='Password' 
+        <Components.Input type='password' placeholder='mot de passe' 
           value={Password}
           onChange={(e) => setPassword(e.target.value)}/>
         <Link to="/quest">

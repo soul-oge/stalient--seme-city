@@ -27,15 +27,15 @@ const Navbar = () => {
           icon: <HomeIcon />,
         },
         {
-          text: "Who are we?",
+          text: "qui somme nous ?",
           icon: <InfoIcon />,
         },
         {
-          text: "Sign In",
+          text: "Connexion",
           icon: <PhoneRoundedIcon />,
         },
         {
-          text: "Sign Up",
+          text: "Inscription",
           icon: <ShoppingCartRoundedIcon />,
         },
       ];
@@ -46,9 +46,9 @@ const Navbar = () => {
             </div>
             <div className="navbar-links-container">
                 <a href="">Home</a>
-                <a href="">Who are we?</a>
-                <button className="primary-button" onClick={()=>{navigate("/signin")}}>Sign In</button>
-                <button className="primary-button" onClick={()=>{navigate("/signup")}}>Sign Up </button>
+                <a href="">Qui sommes nous ?</a>
+                <button className="primary-button" onClick={()=>{navigate("/signin")}}>Connexion</button>
+                <button className="primary-button" onClick={()=>{navigate("/signup")}}>Inscription</button>
             </div>
             <div className="navbar-menu-container">
                 <HiOutlineBars3 onClick={() => setOpenMenu(true)} />

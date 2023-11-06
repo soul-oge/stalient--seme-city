@@ -15,7 +15,7 @@ const AuthDetails = () => {
     try {
       await logout();
       navigate('/');
-      console.log('You are logged out')
+      console.log('Vous êtes deconnecter')
     } catch (e) {
       console.log(e.message);
     }

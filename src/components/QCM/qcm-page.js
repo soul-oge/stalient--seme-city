@@ -9,7 +9,7 @@ function StartQcm() {
     const {id} = useParams();
     const quest = useQuestOnce(id);
     if(quest.status === 'loading') return(<LoadingSpinner/>);
-    if(quest.status === 'error') return (<ErrorMessage>something went wrong</ErrorMessage>)
+    if(quest.status === 'error') return (<ErrorMessage>Quelque chose c'est mal passé</ErrorMessage>)
     return (<QuestForm quizData={quest.data} />)
 }
 

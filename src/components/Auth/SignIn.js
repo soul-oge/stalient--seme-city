@@ -27,17 +27,17 @@ const SignIn = () => {
       <Components.SignInContainer signinIn={signin}>
         <Components.Title>Sign In</Components.Title>
         <Components.Input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
-        <Components.Input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
-        <Components.Anchor href="#">Forgot your password?</Components.Anchor>
-        <Components.Button onClick={handleSignIn} disabled={isLoading}>{isLoading ? 'Chargement...' : 'Sign In'}</Components.Button>
+        <Components.Input type="password" placeholder="Mots de passe" value={password} onChange={(e) => setPassword(e.target.value)} />
+        <Components.Anchor href="#">Mots de passe oubliés ?</Components.Anchor>
+        <Components.Button onClick={handleSignIn} disabled={isLoading}>{isLoading ? 'Chargement...' : 'Se connecter'}</Components.Button>
       </Components.SignInContainer>
       <Components.OverlayContainer signinIn={signin}>
         <Components.Overlay signinIn={signin}>
           <Components.RightOverlayPanel signinIn={signin}>
-            <Components.Title>Hello, Friend!</Components.Title>
-            <Components.Paragraph>Enter your personal details and start your journey with us.</Components.Paragraph>
+            <Components.Title>Hello !</Components.Title>
+            <Components.Paragraph>Saisissez vos données personnelles et commencez votre voyage avec nous.</Components.Paragraph>
             <Link to="/signup">
-              <Components.GhostButton>Sign Up</Components.GhostButton>
+              <Components.GhostButton>Inscription</Components.GhostButton>
             </Link>
           </Components.RightOverlayPanel>
         </Components.Overlay>

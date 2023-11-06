@@ -9,10 +9,10 @@ function Questionnaires(){
     const questions = useQuestionOnce();
 
     if(questions.status === 'loading') return(<LoadingSpinner/>)
-    if(questions.status === 'error') return (<ErrorMessage>something went wrong</ErrorMessage>)
+    if(questions.status === 'error') return (<ErrorMessage>Quelque chose c'est mal passé</ErrorMessage>)
     return (
         <ul>
-            <li className='mx-8 font-bold text-lg'> catégorie</li>
+            <li className='mx-8 font-bold text-lg'>Catégories</li>
             {
                 questions.result.map((quest) =>
                 (

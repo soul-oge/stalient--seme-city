@@ -10,14 +10,11 @@ const Home = () => {
         <div className="home-banner-container">
             <div className="home-text-section">
                 <h1 className="primary-heading">
-                An effective way to evaluate your startup and grow safely
+                Un moyen efficace d'évaluer votre startup et de vous développer en toute sécurité
                 </h1>
                 <p className="primary-text">
                 Lorem ipsum
                 </p>
-                {/* <button className="secondary-button">
-                    Order Now <FiArrowRight />{" "}
-                </button> */}
             </div>
             <div className="home-image-section">
                 <img src={BannerImage} alt="" />

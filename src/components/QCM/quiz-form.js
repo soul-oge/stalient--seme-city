@@ -131,7 +131,7 @@ function TriviaItem({ allAnswers, question, onNextClick }) {
               <input
                 type="radio"
                 id={inputId}
-                name="answer"
+                name="reponse"
                 value={option.text}
                 checked={selectedAnswer === option.text}
                 onChange={() => handleAnswerSelect(option.text, option.score, question.coefficient, question.sous_categorie)}
@@ -170,13 +170,12 @@ function TriviaItem({ allAnswers, question, onNextClick }) {
       }
       return null;
     };
-   // getMaxScore();
     return (
       <div>
         <p className="trivia-item__question">{question.question}</p>
         {renderQuestionFields(question, maxScore)}
         <button className= "trivia-item__button trivia-item__next-button" onClick={handleSubmit}>
-          Next ➡
+          suivant ➡
         </button>
       </div>
     );

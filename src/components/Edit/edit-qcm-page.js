@@ -34,7 +34,7 @@ function EditQcm() {
     return (
     <main>
         <h1>Edit Qcm</h1>
-        <p>Is this a new quest ? {isNew ? "yes" : "No"}</p>
+        <p>Ce question est nouveau ? {isNew ? "OUI" : "NON"}</p>
         <p>Quest status: {quest.status}</p>
         <QuizForm 
             initialData ={quest.data} 

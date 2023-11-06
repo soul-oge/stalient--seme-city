@@ -17,11 +17,6 @@ const UserDetail = () => {
         const userDoc = await getDoc(ref);
       if (userDoc.exists()) {
         const userData = userDoc.data();
-
-        // userData.total_score = 0;
-        // for (const category in userData.all_score) {
-        //   userData.total_score += userData.all_score[category].categoryScore;
-        // }
         const maxScorelist = {};
         for (const category in userData.all_score) {
           if (!maxScorelist[category]) {
