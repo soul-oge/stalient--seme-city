@@ -16,9 +16,16 @@ function EndScreen({score, titre, data} ) {
   const updateUserData = async () => {
     try {
       const docRef = doc(db, 'users', user.uid);
+      let totalMaxScore = 0;
+      for (const questionKey in data) {
+        totalMaxScore += data[questionKey].maxScore;
+      }
+
+      // Update user data with totalMaxScore
       await updateDoc(docRef, {
         [`all_score.${titre}`]: data,
-        [`all_score.${titre}.total_score`] : score
+        [`all_score.${titre}.total_score`]: score,
+        [`all_score.${titre}.total_maxScore`]: totalMaxScore,
       });
     } catch (error) {
       console.error('Erreur lors de la mise à jour des données de l\'utilisateur :', error);
@@ -103,9 +110,6 @@ function TriviaItem({ allAnswers, question, onNextClick }) {
     const [selectedSousCategorie, setSelectedSousCategorie] = useState(null);
     const [maxScore, setMaxScore] = useState(null);
 
-    //const getMaxScore = () => {
-    
-    //}
     const handleAnswerSelect = (answer, score, Coefficient, SousCategorie) => {
       setSelectedAnswer(answer)
       setSelectedScore(score);
