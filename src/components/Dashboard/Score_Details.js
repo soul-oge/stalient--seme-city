@@ -1,15 +1,12 @@
 import {useParams} from "react-router-dom";
-import useQuestOnce from "../../data/hooks/use-quest-once";
-import LoadingSpinner from '../utile/loading-spinner';
-import ErrorMessage from '../utile/error-message';
 import {db} from "../../config/firebase"
 import React, { useEffect, useState } from 'react';
 import { doc, getDoc } from 'firebase/firestore'; // Assurez-vous d'importer les modules Firestore nécessaires
+import { Progress } from 'flowbite-react';
 
 const UserDetail = () => {
    const {userId} = useParams();
    const [userData, setUserData] = useState(null);
-   const [maxScorelist, setMaxScoreList] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -17,6 +14,8 @@ const UserDetail = () => {
         const userDoc = await getDoc(ref);
       if (userDoc.exists()) {
         const userData = userDoc.data();
+
+        userData.total_score = 0;
         const maxScorelist = {};
         for (const category in userData.all_score) {
           if (!maxScorelist[category]) {
@@ -45,9 +44,22 @@ const UserDetail = () => {
           if (!userData.categoryScores[category][subcategory]) {
             userData.categoryScores[category][subcategory] = 0;
           }
-          userData.categoryScores[category][subcategory] += ((question.score * question.coefficient) / (maxScorelist[category][subcategory] )) *100;
+          userData.categoryScores[category][subcategory] += ((question.score * question.coefficient) / (maxScorelist[category][subcategory])) *100;
         }
       }
+      userData.categoryPercentage = {}
+      for (const category in userData.all_score) {
+        let categoryPercentage = 0;
+        const subcategories = Object.keys(userData.categoryScores[category]);
+        for (const subcategory in userData.categoryScores[category]) {
+          if(userData.categoryScores[category][subcategory])
+            categoryPercentage += userData.categoryScores[category][subcategory];
+        }
+        if (subcategories.length > 0) {
+          categoryPercentage = categoryPercentage / (subcategories.length -1);
+        }
+        userData.categoryPercentage[category] = categoryPercentage;
+      }  
       setUserData(userData);
       } else {
         console.log('Document de l\'utilisateur non trouvé.');
@@ -65,7 +77,7 @@ const UserDetail = () => {
           <ul>
             {Object.entries(userData.all_score).map(([category, data]) => (
               <li key={category} className="mb-2">
-                <span className="font-bold">{category}:</span> {data.total_score}
+                <span className="font-bold">{category}:</span> {userData.categoryPercentage[category]}%
                 <h3 className="text-md mt-2 mb-1">Sous-catégories :</h3>
                 <ul>
                   {Object.entries(userData.categoryScores[category]).map(([subcategory, score]) => (
