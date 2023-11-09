@@ -13,10 +13,15 @@ const Dashboard = () => {
             const userData = doc.data();
             const userId = doc.id;
             const scores = Object.entries(userData.all_score).map(([category, data]) => {
-              const totalScore = data.total_score || 0;
+              let percentage;
+              if(data.total_score && data.total_maxScore) {
+                percentage = (data.total_score/data.total_maxScore)*100;
+              } else {
+                percentage = 0;
+              }
               return {
                 category,
-                totalScore,
+                percentage
               };
             });
             userData.scores = scores;
@@ -43,7 +48,7 @@ return (
           {user.scores.map(score => (
             <li key={score.category}>
               <span className="font-semibold">{score.category}: </span>
-              <span>{score.totalScore}</span>
+              <span>{score.percentage}%</span>
             </li>           
           ))}
         </ul>
