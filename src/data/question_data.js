@@ -1,5 +1,5 @@
 const questionnaire_1 = {
-    Catégories: "informations generale",
+    Titre: "informations generale",
     description: "les informations general par rapport a vous et a votre societé",
     questions : [
     {
@@ -50,7 +50,7 @@ const questionnaire_1 = {
     ]
 }
 const questionnaire_2 = {  
-    Catégories: "Développement commercial",
+    description: "Développement commercial",
     Titre : "Bloc", 
     questions : [
     {
@@ -205,7 +205,7 @@ const questionnaire_2 = {
 }
 
 const questionnaire_3 = {  
-    Catégories: "internationnal",
+    description: "internationnal",
     Titre : "Informations", 
     questions : [
     {
@@ -344,7 +344,7 @@ const questionnaire_3 = {
 }
 
 const questionnaire_4 = {  
-    Catégories: "R&D - Innovation",
+    description: "R&D - Innovation",
     Titre : "Recherhce et devellopement", 
     questions : [
     {
@@ -485,87 +485,5 @@ const questionnaire_4 = {
     ]
 }
 
-const questions  = [questionnaire_1, questionnaire_2, questionnaire_3, questionnaire_4]
+const questions  = [questionnaire_1, questionnaire_3, questionnaire_4]
 export default questions
-
-const temp = {
-    all_score : {
-        "Développement commercial":{
-            total_score : 42,
-            question0 : {
-                answer : "oui",
-                coefficient :4,
-                score : 1,
-                sous_categorie : "situation actuelle"
-            },
-            question1 : {
-                answer : "oui",
-                coefficient :2,
-                score : 1,
-                sous_categorie : "situation actuelle"
-            }
-        },
-        "Développement":{
-            total_score : 42,
-            question0 : {
-                answer : "oui",
-                coefficient :4,
-                score : 1,
-                sous_categorie : "situation actuelle"
-            },
-            question1 : {
-                answer : "oui",
-                coefficient :2,
-                score : 1,
-                sous_categorie : "situation actuelle"
-            }
-        }
-    }
-}
-
-const user = {
-    Name : "ds",
-    total_score : 42,
-    all_score: {
-        "Développement commercial" : {
-            question0 : {
-                answer : "oui",
-                coefficient :4,
-                score : 1,
-                sous_categorie : "situation actuelle"
-            },
-            question1 : {
-                answer : "oui",
-                coefficient :4,
-                score : 1,
-                sous_categorie : "situation actuelle"
-            },
-            question3 : {
-                answer : "oui",
-                coefficient :4,
-                score : 1,
-                sous_categorie : "KPI"
-            }
-        }, 
-        "R1D Innovation" : {
-            question0 : {
-                answer : "oui",
-                coefficient :4,
-                score : 1,
-                sous_categorie : "situation actuelle"
-            },
-            question1 : {
-                answer : "oui",
-                coefficient :4,
-                score : 1,
-                sous_categorie : "situation actuelle"
-            },
-            question3 : {
-                answer : "oui",
-                coefficient :4,
-                score : 1,
-                sous_categorie : "KPI"
-            }
-        }
-    }
-}

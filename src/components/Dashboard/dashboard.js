@@ -48,7 +48,7 @@ return (
           {user.scores.map(score => (
             <li key={score.category}>
               <span className="font-semibold">{score.category}: </span>
-              <span>{score.percentage}%</span>
+              <span>{score.percentage.toFixed(2)}%</span>
             </li>           
           ))}
         </ul>

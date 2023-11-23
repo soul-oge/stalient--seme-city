@@ -81,7 +81,7 @@ function QuestForm({ quizData }) {
       pageContent = (
         <EndScreen
           score={score}
-          titre={quizData.Catégories}
+          titre={quizData.Titre}
           data = {answersData}
         />
       );
