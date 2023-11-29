@@ -21,7 +21,7 @@ export const SignUp = () => {
     const[Email, setEmail] = useState("");
     const[Password, setPassword] = useState("");
     const[Name, setName] = useState("");
-    const createUserDocument = async (user) => {
+    const createUserDocument = async (user, role) => {
         if (!user) return;
       
         const userRef = doc(db, "users", user.uid);
@@ -32,6 +32,7 @@ export const SignUp = () => {
             email,
             createdAt: new Date(),
             all_score,
+            role:role
           });
         } catch (error) {
           console.log('Error in creating user', error);
@@ -41,7 +42,7 @@ export const SignUp = () => {
     const handleSignUp = async () => {
         try {
             const{user} = await createUser(Email, Password);
-            createUserDocument(user, Name)
+            createUserDocument(user, 'users')
         }catch(err){
              console.error(err)
         }

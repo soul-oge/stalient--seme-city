@@ -11,18 +11,27 @@ import EditQcm from "./components/Edit/edit-qcm-page"
 import Dashboard from "./components/Dashboard/dashboard"
 import { UserAuth } from './context/AuthContext';
 import UserDetail from './components/Dashboard/Score_Details';
+import {useEffect} from 'react'
 
-function ProtectedRoute({ element: Component}) {
-  const { user} = UserAuth();
-  console.log(user);
+
+function ProtectedRoute({ element: Component, adminOnly = false }) {
+  const { user, role , loading} = UserAuth();
   if (!user) {
-    return <Navigate to='/signin'/>;
+    return <Navigate to="/signin" />;
   }
+  if (loading) {
+    return null;
+  }
+  const isAdmin = role === 'admin';
+  if (adminOnly && !isAdmin) {
+    return <Navigate to='/quest' />;
+  }
+
   return Component;
 }
-
 const App = () => {
   return (
+    
     <AuthContextProvider>
     <Routes>
       <Route path="/signup" element={<SignUp />} />
@@ -38,7 +47,7 @@ const App = () => {
         }
       />
       <Route
-        path="quest/*"
+        path="quest/"
         element={
           <ProtectedRoute
             element={<Questionnaires_page />}
@@ -53,15 +62,17 @@ const App = () => {
       />
       <Route
         path="quest/edit_qcm/:id"
-        element={<ProtectedRoute element={<EditQcm />}/>}
+        element={<ProtectedRoute adminOnly={true} element={<EditQcm />}/>}
       />
       <Route
         path="admin"
-        element={<ProtectedRoute element={<Dashboard />}/>}
+        element={<ProtectedRoute adminOnly={true} element={<Dashboard />}
+        />}
       />
       <Route
         path="admin/:userId"
-        element={<ProtectedRoute element={<UserDetail />}/>}
+        element={<ProtectedRoute adminOnly={true} element={<UserDetail/>}/>
+      }
       />
 
       <Route path="*" element={<NoMatch />} />
