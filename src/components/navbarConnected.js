@@ -6,8 +6,8 @@ import { useAuth } from './Auth/useAuth';
 import { UserAuth } from '../context/AuthContext';
 
 const AuthenticatedNavbar = () => {
-  const { user} = UserAuth();
-
+  const { user, role} = UserAuth();
+  const isAdmin = role === 'admin'
   return (
 <nav className="flex items-center justify-between p-4">
   <div className="nav-logo-container">
@@ -15,6 +15,7 @@ const AuthenticatedNavbar = () => {
   </div>
   <div className="navbar-links-container flex items-center space-x-4">
     <a href="/">Home</a>
+    {isAdmin && (<a href="/admin">Dashboard</a>)}
     {user? (
       <a href="/users" className="flex items-center">
         <PersonIcon className="mr-2" /> {`Connecter avec ${user.email}`}

@@ -16,7 +16,11 @@
   .quiz-preview:hover {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   }
-  
+
+  .quiz-buttons-container {
+    display: flex;
+    gap: 10px; /* Ajoutez un espacement entre les boutons si nécessaire */
+  }
   .quiz-preview-image {
     width: 150px;
     height: 150px;
@@ -50,7 +54,16 @@
     font-size: 16px;
     cursor: pointer;
 }
-  
+.quiz-preview_edit {
+  display: inline-block;
+    padding: 10px 20px;
+    background-color: #22C96A;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+}
 .quiz-preview_play:hover {
     background-color: #0b9547;
 }
