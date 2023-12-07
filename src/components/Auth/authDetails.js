@@ -1,13 +1,9 @@
-import { onAuthStateChanged, signOut } from "firebase/auth";
 import React, { useEffect, useState } from "react";
 import PersonIcon from '@mui/icons-material/Person';
-import { signOutUser } from "./AuthManage";
-import { useAuth } from './useAuth';
 import { UserAuth } from '../../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 
 const AuthDetails = () => {
-  const {authUser, loading }= useAuth();
   const { user, logout } = UserAuth();
   const navigate = useNavigate();
 

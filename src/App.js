@@ -12,7 +12,7 @@ import Dashboard from "./components/Dashboard/dashboard"
 import { UserAuth } from './context/AuthContext';
 import UserDetail from './components/Dashboard/Score_Details';
 import {useEffect} from 'react'
-
+import AddAdmin from './components/madeAdmin'
 
 function ProtectedRoute({ element: Component, adminOnly = false }) {
   const { user, role , loading} = UserAuth();
@@ -74,7 +74,11 @@ const App = () => {
         element={<ProtectedRoute adminOnly={true} element={<UserDetail/>}/>
       }
       />
-
+      <Route
+        path="/addAdmin"
+        element={<ProtectedRoute adminOnly={true} element={<AddAdmin/>}/>
+      }
+      />
       <Route path="*" element={<NoMatch />} />
     </Routes> 
     </AuthContextProvider>);
